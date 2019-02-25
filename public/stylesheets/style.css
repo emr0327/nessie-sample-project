@@ -3,6 +3,23 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+h1 {
+  color: red;
+}
+
 a {
   color: #00B7FF;
+}
+
+.customerDiv {
+  border: red 1px solid;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.table-fixed {
+    table-layout: fixed; 
+    overflow: hidden;
 }
