@@ -1,0 +1,39 @@
+<h1>Welcome!</h1>
+<h2>My Accounts</h2>
+<table class="table w-auto">
+  <thead class="black white-text">
+    <tr>
+      <th scope="col">Account ID</th>
+      <th scope="col">Type</th>
+      <th scope="col">Account Nickname</th>
+      <th scope="col">Rewards</th>
+      <th scope="col">Balance</th>
+      <th scope="col">Customer ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (accounts.length > 0) { %>
+      <% accounts.forEach(account => { %>
+        <tr class="blue-grey lighten-3">
+          <th scope="row"><%= account._id %></th>
+          <td><%= account.type %></td>
+          <td><%= account.nickname %></td>
+          <td><%= account.rewards %></td>
+          <td>$<%= account.balance %></td>
+          <td><%= account.customer_id %></td>
+        </tr>
+      <% }) %>
+    <% } else { %>
+        <tr class="blue-grey lighten-3">
+          <th scope="row"><p>You do not have any accounts</p></th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+    <% } %>
+  </tbody>
+</table>
+<button type="button" class="btn btn-primary">Create a new account</button>
+
