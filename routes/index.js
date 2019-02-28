@@ -39,10 +39,8 @@ var accounts = {
 
 // GET home page.
 router.get('/', function(req, res, next) {
-  // res.render('index');
   rp(options)
     .then(customers => {
-      console.log(typeof(customers))
       res.render('index', {
         customers
       });
@@ -76,6 +74,7 @@ router.get('/:id', (req, res) => {
     .then(accounts => {
       res.render('show', {
         customer_id: req.params.id,
+        customer_name: req.query.first_name,
         accounts
       });
     })
