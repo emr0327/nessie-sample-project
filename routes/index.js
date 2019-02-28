@@ -53,9 +53,15 @@ router.get('/', function(req, res, next) {
     });
 });
 
+// NEW route
+router.get('/:id/accounts/new', (req, res) => {
+  res.render('new', {
+    customer_id: req.params.id
+  });
+});
+
 // SHOW ROUTE
-router.get("/:id", (req, res) => {
-  // res.send('SHOW ME THE MONEY');
+router.get('/:id', (req, res) => {
   rp({
     "method": "GET",
     "uri": BASE_URL + '/customers/' + req.params.id + '/accounts/',
@@ -66,16 +72,42 @@ router.get("/:id", (req, res) => {
       'User-Agent': 'Request-Promise-Native'
     },
     "json": true
-    })
+  })
     .then(accounts => {
       res.render('show', {
+        customer_id: req.params.id,
         accounts
       });
     })
     .catch(err => {
       // API call failed
-      res.send(err)
+      res.send(err);
     });
+});
+
+// POST route
+router.post('/:id/accounts/new', (req, res) => {
+  req.body.rewards = parseInt(req.body.rewards);
+  req.body.balance = parseInt(req.body.balance);
+  rp({
+    "method": "POST",
+    "uri": BASE_URL + '/customers/' + req.params.id + '/accounts/',
+    "qs": {
+      key: API_KEY_PARAM
+    },
+    "body": req.body,
+    "headers": {
+      'User-Agent': 'Request-Promise-Native',
+      'Content-Type': 'application/json'
+    },
+    "json": true
+  })
+    .then( () => {
+      res.redirect('/' + req.params.id);
+    })
+    .catch(err => {
+      res.send(err);
+  });
 });
 
 module.exports = router;

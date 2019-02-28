@@ -1,0 +1,35 @@
+<h1>Add a New Account!</h1>
+
+<form action="/<%= customer_id %>/accounts/new" method="POST">
+  <div class="container">
+    <div class="form-group">
+      <label for="type">Account Type</label>
+      <select name="type" class="form-control browser-default custom-select mb-4">
+        <option value="" disabled>Choose option</option>
+        <option value="Checking" selected>Checking</option>
+        <option value="Savings">Savings</option>
+      </select>
+      <small class="form-text text-muted mb-4">Required</small>
+    </div>
+
+    <div class="form-group">
+      <label for="nickname">Nickname</label>
+      <input class="form-control" type="text" name="nickname">
+      <small class="form-text text-muted mb-4">Required</small>
+    </div>
+
+    <div class="form-group">
+      <input class="form-control" type="hidden" name="rewards" value="0">
+    </div>
+
+    <div class="form-group">
+      <input class="form-control" type="hidden" name="balance" value="0">
+    </div>
+
+    <div class="form-group">
+      <input class="btn btn-info" type="submit" value="Add Account">
+    </div>
+  </div>
+</form>
+<br>
+<a class="btn btn-outline-dark" href="/">Cancel</a>

@@ -3,8 +3,9 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
-let methodOverride = require("method-override");
-var ejsLayouts = require("express-ejs-layouts");
+let methodOverride = require('method-override');
+let ejsLayouts = require('express-ejs-layouts');
+let bodyParser = require('body-parser');
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
@@ -22,6 +23,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method-override'))
 app.use(ejsLayouts);
+app.use(bodyParser.urlencoded({ extended: true }))
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
