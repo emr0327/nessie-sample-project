@@ -106,7 +106,28 @@ router.post('/:id/accounts/new', (req, res) => {
     })
     .catch(err => {
       res.send(err);
-  });
+    });
+});
+
+// DELETE route
+router.delete('/:id', (req, res) => {
+  rp({
+    "method": "DELETE",
+    "uri": BASE_URL + '/accounts/' + req.params.id,
+    "qs": {
+      key: API_KEY_PARAM
+    },
+    "headers": {
+      'User-Agent': 'Request-Promise-Native'
+    },
+    "json": true
+  })
+    .then((response) => {
+      res.redirect('/' + req.query.customer_id);
+    })
+    .catch(err => {
+      res.send(err);
+    });
 });
 
 module.exports = router;

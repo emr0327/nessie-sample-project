@@ -9,18 +9,52 @@
       <th scope="col">Rewards</th>
       <th scope="col">Balance</th>
       <th scope="col">Customer ID</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
     <% if (accounts.length > 0) { %>
       <% accounts.forEach(account => { %>
-        <tr class="blue-grey lighten-3">
-          <th scope="row"><%= account._id %></th>
+        <tr class="blue-grey lighten-3 account-row">
+          <th scope="row" class="account-id"><%= account._id %></th>
           <td><%= account.type %></td>
           <td><%= account.nickname %></td>
           <td><%= account.rewards %></td>
           <td>$<%= account.balance %></td>
           <td><%= account.customer_id %></td>
+          <td>
+            <span class="table-remove">
+              <button type="button" class="btn btn-danger btn-rounded btn-sm my-0 remove" data-toggle="modal" data-target="#account<%=account._id%>id">
+                Remove
+              </button>
+            </span>
+          
+          <div class="modal fade" id="account<%=account._id%>id" tabindex="-1" role="dialog" aria-labelledby="removeAccountModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="removeAccountModalLabel">You are about to remove this account</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  CAUTION!!!
+                  <br>
+                  <br>
+                  Removing account: <%= account._id %> will delete all the data associated with it. You must visit a local branch to retrieve any monies left residing in the account.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn grey darken-1" data-dismiss="modal">Cancel</button>
+                  <form id="remove-form" action="<%= account._id %>?_method=DELETE&customer_id=<%= account.customer_id %>" method="POST" >
+                    <button id="removeAccount" class="btn btn-primary" type="submit">Remove Account</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          </td>
         </tr>
       <% }) %>
     <% } else { %>
@@ -37,3 +71,25 @@
 </table>
 <a href="/<%= customer_id %>/accounts/new" role="button" class="btn btn-primary">Create a new account</a>
 
+<script>
+  $(document).ready(function () {
+    console.log("loaded and ready to go!");
+    var $remove = $(".remove");
+    console.log($remove.length);
+    var $id = $(".account-id");
+    console.log($id.text());
+    $(".remove").click(() => {
+      console.log("I'm in the modal");
+      var $window = window.parent.$(this).closest("tr"); // w.fn.init [prevObject: w.fn.init(1)]
+      console.log($window);
+      var $parent = $(this).parent().closest("tr");
+      console.log($parent);
+      var $row = $(this).closest("tr"); // find row
+      console.log($row);
+      var $account_id = $row.find("th"); // find account id
+      console.log($account_id);
+      console.log(typeof($account_id.text()));
+      $("#remove-form").prop("action", "/" + $account_id + "?_method=DELETE"); // change action attribute to account id value
+    })
+  });
+</script>
