@@ -19,6 +19,7 @@ var options = {
 
 // INDEX ROUTE
 router.get('/', (req, res, next) => {
+  console.log("atms route");
   res.send("List of ATMs soon to come");
 });
 
