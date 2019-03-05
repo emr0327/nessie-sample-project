@@ -15,28 +15,6 @@ var options = {
   json: true // Automatically parses the JSON string in the response
 };
 
-var customers = {
-  uri: BASE_URL + '/customers/',
-  qs: {
-    key: API_KEY_PARAM // -> uri + '?access_token=xxxxx%20xxxxx'
-  },
-  headers: {
-    'User-Agent': 'Request-Promise-Native'
-  },
-  json: true // Automatically parses the JSON string in the response
-}
-
-var accounts = {
-  uri: BASE_URL + '/customers',
-  qs: {
-    key: API_KEY_PARAM // -> uri + '?access_token=xxxxx%20xxxxx'
-  },
-  headers: {
-    'User-Agent': 'Request-Promise-Native'
-  },
-  json: true // Automatically parses the JSON string in the response
-}
-
 // GET home page.
 router.get('/', function(req, res, next) {
   rp(options)
@@ -45,9 +23,9 @@ router.get('/', function(req, res, next) {
         customers
       });
     })
-    .catch(err => {
+    .catch(error => {
       // API call failed
-      res.send(err)
+      res.send(error)
     });
 });
 
@@ -78,9 +56,9 @@ router.get('/:id', (req, res) => {
         accounts
       });
     })
-    .catch(err => {
+    .catch(error => {
       // API call failed
-      res.send(err);
+      res.send(error);
     });
 });
 
@@ -104,8 +82,8 @@ router.post('/:id/accounts/new', (req, res) => {
     .then( () => {
       res.redirect('/' + req.params.id);
     })
-    .catch(err => {
-      res.send(err);
+    .catch(error => {
+      res.render('error', { error });
     });
 });
 
@@ -125,8 +103,8 @@ router.delete('/:id', (req, res) => {
     .then((response) => {
       res.redirect('/' + req.query.customer_id);
     })
-    .catch(err => {
-      res.send(err);
+    .catch(error => {
+      res.send(error);
     });
 });
 

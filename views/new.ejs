@@ -3,8 +3,8 @@
 <form action="/<%= customer_id %>/accounts/new" method="POST">
   <div class="container">
     <div class="form-group">
-      <label for="type">Account Type</label>
-      <select name="type" class="form-control browser-default custom-select mb-4">
+      <label for="validationDefault01">Account Type</label>
+      <select name="type" id="validationDefault01" class="form-control browser-default custom-select mb-4" required>
         <option value="" disabled>Choose option</option>
         <option value="Checking" selected>Checking</option>
         <option value="Savings">Savings</option>
@@ -13,8 +13,8 @@
     </div>
 
     <div class="form-group">
-      <label for="nickname">Nickname</label>
-      <input class="form-control" type="text" name="nickname">
+      <label for="validationDefault02">Nickname</label>
+      <input id="validationDefault02" class="form-control" type="text" name="nickname" required>
       <small class="form-text text-muted mb-4">Required</small>
     </div>
 

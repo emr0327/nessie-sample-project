@@ -5,6 +5,7 @@ body {
 
 h1 {
   color: red;
+  margin: 30px 0px;
 }
 
 table.table a:link {
