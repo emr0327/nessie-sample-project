@@ -19,8 +19,18 @@ var options = {
 
 // INDEX ROUTE
 router.get('/', (req, res, next) => {
-  console.log("atms route");
-  res.send("List of ATMs soon to come");
+  res.render('atm/index');
+});
+
+router.post('/', (req, res, next) => {
+  var desiredZipcode = req.body.zipcode;
+  console.log("I posted to the atm post controller");
+  for (let value of Object.values(data)) {
+    if (value.zipcode == desiredZipcode) {
+      console.log("We found a match " + value.zipcode);
+    }
+  }
+  res.redirect('/');
 });
 
 module.exports = router;
