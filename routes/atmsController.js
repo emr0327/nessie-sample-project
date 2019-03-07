@@ -5,18 +5,6 @@ var rp = require("request-promise-native");
 var data = require("../models/geo_data").seededGeoData;
 const { BASE_URL, API_KEY_PARAM } = require('../config');
 
-
-var options = {
-  uri: BASE_URL + '/customers',
-  qs: {
-    key: API_KEY_PARAM // -> uri + '?access_token=xxxxx%20xxxxx'
-  },
-  headers: {
-    'User-Agent': 'Request-Promise-Native'
-  },
-  json: true // Automatically parses the JSON string in the response
-};
-
 // INDEX ROUTE
 router.get('/', (req, res, next) => {
   res.render('atm/index');
@@ -24,13 +12,35 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   var desiredZipcode = req.body.zipcode;
-  console.log("I posted to the atm post controller");
   for (let value of Object.values(data)) {
     if (value.zipcode == desiredZipcode) {
-      console.log("We found a match " + value.zipcode);
+      req.body.latitude = parseFloat(value.latitude);
+      req.body.longitude = parseFloat(value.longitude);
     }
-  }
-  res.redirect('/');
+  };
+  rp({
+    "method": "GET",
+    "uri": BASE_URL + '/atms',
+    "qs": {
+      lat: req.body.latitude,
+      lng: req.body.longitude,
+      rad: parseInt(req.body.radius),
+      key: API_KEY_PARAM
+    },
+    "headers": {
+      'User-Agent': 'Request-Promise-Native',
+      'Content-Type': 'application/json'
+    },
+    "json": true
+  })
+    .then((atms) => {
+      res.render('atm/atms', {
+        atms: atms.data
+      })
+    })
+    .catch(error => {
+      res.render('error', { error });
+    });
 });
 
 module.exports = router;
