@@ -10,6 +10,7 @@ router.get('/', (req, res, next) => {
   res.render('atm/index');
 });
 
+// form triggers a post route which calls a GET to the atms endpoint
 router.post('/', (req, res, next) => {
   var desiredZipcode = req.body.zipcode;
   for (let value of Object.values(data)) {
@@ -17,7 +18,7 @@ router.post('/', (req, res, next) => {
       req.body.latitude = parseFloat(value.latitude);
       req.body.longitude = parseFloat(value.longitude);
     }
-  };
+  }; 
   rp({
     "method": "GET",
     "uri": BASE_URL + '/atms',
@@ -42,5 +43,12 @@ router.post('/', (req, res, next) => {
       res.render('error', { error });
     });
 });
+
+// SHOW ROUTE for unique ATM
+router.get('/:id', (req, res, next) => {
+  res.render('atm/show', {
+    atm_id: req.params.id
+  });
+})
 
 module.exports = router;
