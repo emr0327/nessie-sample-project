@@ -13,8 +13,59 @@
     <h4 class="card-title"><%= atm.name %></h4>
     <!--Text-->
     <p class="card-text">Hours: <%= atm.hours[0] %></p>
-    <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-    <a href='/profile/atms/<%= atm._id %>' role="button" class="btn btn-light-blue btn-md">Read more</a>
+
+    <!-- Button trigger modal-->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#atm<%= atm._id %>id">More Info</button>
+    
+    <!--Modal: modalRelatedContent-->
+    <div class="modal fade" id="atm<%= atm._id %>id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+      aria-hidden="true" data-backdrop="false">
+      <div class="modal-dialog modal-notify modal-info" role="document">
+        <!--Content-->
+        <div class="modal-content">
+          <!--Header-->
+          <div class="modal-header">
+            <p class="heading"><%= atm.name %></p>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" class="white-text">&times;</span>
+            </button>
+          </div>
+          <!--Body-->
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-5">
+                <p><strong>Languages:</strong></p>
+                <ul>
+                  <% atm.language_list.forEach(language => { %>  
+                    <li><%= language %></li>
+                  <% }) %>
+                </ul>
+                <br>
+                <p><strong>Accessibility:</strong><br><%= atm.accessibility %></p>
+              </div>
+              <div class="col-7">
+                <p>
+                  <strong>Address:</strong><br>
+                  <%= atm.address.street_number %> 
+                  <%= atm.address.street_name %>,  
+                  <%= atm.address.city %>, 
+                  <%= atm.address.state %>
+                  <%= atm.address.zip %> 
+                </p>
+                <br<
+                <p><strong>Amount Left: </strong><br>$<%= atm.amount_left %></p>
+                <a href="https://www.google.com/maps/place/<%= atm.address.street_number %>+<%= atm.address.street_name %>+<%= atm.address.city %>+<%= atm.address.state %>+<%= atm.address.zip %>"
+                  target="_blank" role="button" class="btn btn-info btn-md">
+                  Directions
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--/.Content-->
+      </div>
+    </div>
+    <!--Modal: modalRelatedContent-->
   </div>
 </div>
 <!-- Card -->
