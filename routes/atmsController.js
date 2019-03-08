@@ -19,29 +19,36 @@ router.post('/', (req, res, next) => {
       req.body.longitude = parseFloat(value.longitude);
     }
   }; 
-  rp({
-    "method": "GET",
-    "uri": BASE_URL + '/atms',
-    "qs": {
-      lat: req.body.latitude,
-      lng: req.body.longitude,
-      rad: parseInt(req.body.radius),
-      key: API_KEY_PARAM
-    },
-    "headers": {
-      'User-Agent': 'Request-Promise-Native',
-      'Content-Type': 'application/json'
-    },
-    "json": true
-  })
-    .then((atms) => {
-      res.render('atm/atms', {
-        atms: atms.data
-      })
+  if (req.body.latitude && req.body.longitude) {
+    rp({
+      "method": "GET",
+      "uri": BASE_URL + '/atms',
+      "qs": {
+        lat: req.body.latitude,
+        lng: req.body.longitude,
+        rad: parseInt(req.body.radius),
+        key: API_KEY_PARAM
+      },
+      "headers": {
+        'User-Agent': 'Request-Promise-Native',
+        'Content-Type': 'application/json'
+      },
+      "json": true
     })
-    .catch(error => {
-      res.render('error', { error });
+      .then((atms) => {
+        res.render('atm/atms', {
+          atms: atms.data
+        })
+      })
+      .catch(error => {
+        res.render('error', { error });
+      });
+  } else {
+    res.render('partials/noATMsFound', {
+      zipcode: req.body.zipcode
     });
+  }
+  
 });
 
 // SHOW ROUTE for unique ATM
