@@ -7,16 +7,16 @@ const { BASE_URL, API_KEY_PARAM } = require('../config');
 var options = {
   uri: BASE_URL+'/customers',
   qs: {
-    key: API_KEY_PARAM // -> uri + '?access_token=xxxxx%20xxxxx'
+    key: API_KEY_PARAM
   },
   headers: {
     'User-Agent': 'Request-Promise-Native'
   },
-  json: true // Automatically parses the JSON string in the response
+  json: true
 };
 
 // GET home page.
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   rp(options)
     .then(customers => {
       res.render('index', {
@@ -24,8 +24,7 @@ router.get('/', function(req, res, next) {
       });
     })
     .catch(error => {
-      // API call failed
-      res.send(error)
+      res.render('error', { error });
     });
 });
 
@@ -57,8 +56,7 @@ router.get('/:id', (req, res) => {
       });
     })
     .catch(error => {
-      // API call failed
-      res.send(error);
+      res.render('error', { error });
     });
 });
 
@@ -100,11 +98,11 @@ router.delete('/:id', (req, res) => {
     },
     "json": true
   })
-    .then((response) => {
+    .then(res => {
       res.redirect('/' + req.query.customer_id);
     })
     .catch(error => {
-      res.send(error);
+      res.render('error', { error });
     });
 });
 

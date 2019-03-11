@@ -6,7 +6,7 @@ var data = require("../models/geo_data").seededGeoData;
 const { BASE_URL, API_KEY_PARAM } = require('../config');
 
 // INDEX ROUTE
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   res.render('atm/index');
 });
 
@@ -35,7 +35,7 @@ router.post('/', (req, res, next) => {
       },
       "json": true
     })
-      .then((atms) => {
+      .then(atms => {
         res.render('atm/atms', {
           atms: atms.data,
           zipcode: req.body.zipcode
@@ -49,14 +49,13 @@ router.post('/', (req, res, next) => {
       zipcode: req.body.zipcode
     });
   }
-  
 });
 
 // SHOW ROUTE for unique ATM
-router.get('/:id', (req, res, next) => {
+router.get('/:id', (req, res) => {
   res.render('atm/show', {
     atm_id: req.params.id
   });
-})
+});
 
 module.exports = router;

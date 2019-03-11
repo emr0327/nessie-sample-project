@@ -5,7 +5,7 @@ var rp = require("request-promise-native");
 const { BASE_URL, API_KEY_PARAM } = require('../config');
 
 // INDEX ROUTE
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   rp({
     "method": "GET",
     "uri": BASE_URL + '/branches',
@@ -18,7 +18,7 @@ router.get('/', (req, res, next) => {
     },
     "json": true
   })
-    .then((branches) => {
+    .then(branches => {
       res.render('branch/branches', {
         branches
       })
