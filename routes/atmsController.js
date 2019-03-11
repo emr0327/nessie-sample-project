@@ -37,7 +37,8 @@ router.post('/', (req, res, next) => {
     })
       .then((atms) => {
         res.render('atm/atms', {
-          atms: atms.data
+          atms: atms.data,
+          zipcode: req.body.zipcode
         })
       })
       .catch(error => {
