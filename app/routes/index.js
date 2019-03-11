@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var rp = require("request-promise-native");
 
-const { BASE_URL, API_KEY_PARAM } = require('../config');
+const { BASE_URL, API_KEY_PARAM } = require('../../config');
 
 var options = {
   uri: BASE_URL+'/customers',

@@ -3,7 +3,7 @@ var router = express.Router();
 var rp = require("request-promise-native");
 
 var data = require("../models/geo_data").seededGeoData;
-const { BASE_URL, API_KEY_PARAM } = require('../config');
+const { BASE_URL, API_KEY_PARAM } = require('../../config');
 
 // INDEX ROUTE
 router.get('/', (req, res) => {
