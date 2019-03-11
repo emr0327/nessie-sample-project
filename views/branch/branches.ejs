@@ -1,0 +1,24 @@
+<h1>Capital One Branch Locations</h1>
+
+<% if (branches.length > 0) { %>
+<% branches.forEach((branch, index) => { %>
+<!-- Check for first card, opening card-deck div, new card div -->
+<% if (index == 0) { %>
+<!-- Beginning of Card deck -->
+<div class="card-deck">
+  <% include ../partials/branchCard %>
+  <!-- Closing card-deck div, new card-div -->
+  <% } else if (index % 2 == 0) { %>
+</div>
+<!-- End of Card deck -->
+<!-- Beginning of Card deck -->
+<div class="card-deck">
+  <% include ../partials/branchCard %>
+  <% } else { %>
+  <!-- Just add a new card -->
+  <% include ../partials/branchCard %>
+  <% } %>
+  <% }) %>
+  <% } else { %>
+      <h1>No branches found</h1>
+  <% } %>
